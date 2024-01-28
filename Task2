@@ -1,0 +1,76 @@
+Student Grade Calculation
+
+Input: Take marks obtained (out of 100) in each subject.
+Calculate Total Marks: Sum up the marks obtained in all subjects.
+Calculate Average Percentage: Divide the total marks by the total number of subjects to get the
+average percentage.
+Grade Calculation: Assign grades based on the average percentage achieved.
+Display Results: Show the total marks, average percentage, and the corresponding grade to the user
+
+
+
+package Task2;
+import java.util.Scanner;
+
+public class GradeCalculator {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        // Input: Take marks obtained in each subject
+        System.out.println("Enter marks (out of 100) for each subject:");
+        int subjectCount = 5; // Assuming 5 subjects for this example
+        int[] marks = new int[subjectCount];
+        
+        for (int i = 0; i < subjectCount; i++) {
+            System.out.print("Subject " + (i + 1) + ": ");
+            marks[i] = scanner.nextInt();
+        }
+
+        // Calculate Total Marks
+        int totalMarks = calculateTotalMarks(marks);
+
+        // Calculate Average Percentage
+        double averagePercentage = calculateAveragePercentage(totalMarks, subjectCount);
+
+        // Grade Calculation
+        char grade = calculateGrade(averagePercentage);
+
+        // Display Results
+        displayResults(totalMarks, averagePercentage, grade);
+    }
+
+    static int calculateTotalMarks(int[] marks) {
+        int total = 0;
+        for (int mark : marks) {
+            total += mark;
+        }
+        return total;
+    }
+
+    static double calculateAveragePercentage(int totalMarks, int subjectCount) {
+        return (double) totalMarks / subjectCount;
+    }
+
+    static char calculateGrade(double averagePercentage) {
+        if (averagePercentage >= 90) {
+            System.out.println( "Your grade is A!! Congrats!");
+        } else if (averagePercentage >= 80) {
+            System.out.println( "Your grade is B!");
+        } else if (averagePercentage >= 70) {
+            System.out.println("Your garde is C!");
+        } else if (averagePercentage >= 60) {
+            System.out.println("Your grade is D!");
+        } else {
+        	System.out.println("Your garde is F!");
+        }
+		return 0;
+    }
+
+    static void displayResults(int totalMarks, double averagePercentage, char grade) {
+        // Display Results
+        System.out.println("\nResults:");
+        System.out.println("Total Marks: " + totalMarks);
+        System.out.printf("Average Percentage: %.2f%%\n", averagePercentage);
+        System.out.println("Grade: " + grade);
+    }
+}
