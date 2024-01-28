@@ -1,0 +1,98 @@
+Number generator 
+
+1. Generate a random number within a specified range, such as 1 to 100.
+
+2. Prompt the user to enter their guess for the generated number.
+
+3. Compare the user's guess with the generated number and provide feedback on whether the guess
+is correct, too high, or too low.
+
+4. Repeat steps 2 and 3 until the user guesses the correct number.
+
+You can incorporate additional details as follows:
+
+5. Limit the number of attempts the user has to guess the number.
+6. Add the option for multiple rounds, allowing the user to play again.
+7. Display the user's score, which can be based on the number of attempts taken or rounds won.
+
+
+package Task1;
+import java.util.*;
+
+public class Myrandom {
+
+	
+	public static void main(String[] args) {
+		Scanner sc = new Scanner(System.in);
+		System.out.println("Hey there!!! Let us start the game!");
+		
+		while(true)
+		{
+				
+		System.out.println("Would you like to start? (Yes-> 1 ; No-> 0)");
+		int ch = sc.nextInt();
+	
+		
+		if(ch == 1)
+		{
+			
+			System.out.println("Enter the minimum value of your range ");
+			int min = sc.nextInt();
+			
+			System.out.println("Enter the maximum value of your range ");
+			int max = sc.nextInt();
+			
+			
+		
+			int total_attempts = 0;
+			int max_attempts = 10;
+			int secretNumber = new Random().nextInt(max - min + 1) + min;
+			
+			while(total_attempts <= max_attempts)
+			{
+				System.out.println("Enter your guess for the number ");
+				int urguess = sc.nextInt();
+				total_attempts ++;
+			
+			
+				if(secretNumber == urguess)
+				{
+					System.out.println("You win !!!... in "+ total_attempts + " attempts");
+					//total_attempts ++;
+					break;
+				}
+				else if( secretNumber > urguess)
+				{
+					System.out.println("Your guess is less than the number!");
+					//total_attempts ++;
+				}
+				
+				else
+				{
+					System.out.println("Your guess is greater than the number!");
+					//total_attempts ++;
+				}
+				
+				
+			}
+			if( total_attempts > max_attempts)
+			System.out.println("All your attempts are over. You lost the game!!!");
+			//break;
+			
+			
+
+		}
+		else if(ch == 0)
+		{
+			System.out.println("Thank you!!");
+		break;
+		}
+		
+		
+	
+		
+		
+	}
+	}
+	
+}
