@@ -1,0 +1,121 @@
+Quiz Application with Timer
+
+Quiz Questions and Options: Store quiz questions along with multiple-choice options and correct
+answers.
+Timer: Implement a timer for each question to limit the time to answer.
+Question Display: Present one question at a time with multiple-choice options.
+Answer Submission: Allow users to select an option and submit their answer within the given
+time.
+Score Calculation: Keep track of the user's score based on correct answers.
+
+
+package Task4;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Scanner;
+import java.util.Timer;
+import java.util.TimerTask;
+
+public class QuizApplication {
+    private static int score = 0;
+    private static int questionNumber = 0;
+    private static List<QuizQuestion> questions;
+    private static Timer timer;
+
+    public static void main(String[] args) {
+        initializeQuiz();
+
+        Scanner scanner = new Scanner(System.in);
+
+        for (QuizQuestion question : questions) {
+            displayQuestion(question);
+            startTimer(10); // Timer set to 10 seconds for each question
+
+            int userAnswer = scanner.nextInt();
+
+            if (userAnswer == question.correctOption) {
+                System.out.println("Correct!\n");
+                score++;
+            } else {
+                System.out.println("Incorrect! The correct answer was option " + question.correctOption + "\n");
+            }
+
+            cancelTimer();
+        }
+
+        displayResult();
+    }
+
+    private static void initializeQuiz() {
+        questions = new ArrayList<>();
+        questions.add(new QuizQuestion("What is the capital of Australia?", Arrays.asList("1. Sydney", "2. Melbourne", "3. Canberra", "4. Perth"), 3));
+        questions.add(new QuizQuestion("Which planet is known as the Red Planet?", Arrays.asList("1. Venus", "2. Mars", "3. Jupiter", "4. Saturn"), 2));
+        questions.add(new QuizQuestion("What is the largest ocean in the world? ", Arrays.asList("1. Pacific Ocean", "2. Atlantic ocean", "3. Indian Ocean", "4. Arctic ocean"), 1));
+        questions.add(new QuizQuestion("Who wrote the play 'Romeo and Juliet'?", Arrays.asList("1. F.Scott Fitzgerald", "2. Charles Dickens", "3. Jane Austen", "4. William Shakespeare"), 4));
+        questions.add(new QuizQuestion("What is the currency of Japan?", Arrays.asList("1. Yen", "2. Euro", "3. Dolar", "4. Rupee"), 1));
+        
+        // Add more questions as needed
+    }
+
+    private static void displayQuestion(QuizQuestion question) {
+        System.out.println("Question " + (questionNumber + 1) + ": " + question.question);
+        for (String option : question.options) {
+            System.out.println(option);
+        }
+        System.out.print("Enter your answer (1-" + question.options.size() + "): ");
+    }
+
+    private static void startTimer(int seconds) {
+        timer = new Timer();
+        timer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                System.out.println("\nTime's up! You are out of quiz.\n");
+                cancelTimer();
+            }
+        }, seconds * 1000);
+    }
+
+    private static void cancelTimer() {
+        if (timer != null) {
+            timer.cancel();
+            timer.purge();
+        }
+    }
+
+    private static void displayResult() {
+        System.out.println("Quiz completed!");
+        System.out.println("Your final score: " + score + " out of " + questions.size());
+
+        // Display a summary of correct and incorrect answers
+        for (int i = 0; i < questions.size(); i++) {
+            QuizQuestion question = questions.get(i);
+            //   System.out.println("Question " + (i + 1) + ": " + (scoredCorrectly(question) ? "Correct" : "Incorrect"));
+        }
+    }
+
+    private static boolean scoredCorrectly(QuizQuestion question) {
+        return question.correctOption == 1; // Adjust the condition based on your correct answer criteria
+    }
+}
+
+
+//2nd class
+
+package Task4;
+
+import java.util.List;
+
+class QuizQuestion {
+    String question;
+    List<String> options;
+    int correctOption;
+
+    QuizQuestion(String question, List<String> options, int correctOption) {
+        this.question = question;
+        this.options = options;
+        this.correctOption = correctOption;
+    }
+}
